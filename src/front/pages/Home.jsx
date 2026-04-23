@@ -52,6 +52,21 @@ export const Home = () => {
         } catch (error) { }
     };
 
+    const combinedFavorites = [
+        ...(season?.featuredItems || []).map(item => ({
+            img: item.imageUrl,
+            name: item.name,
+            price: item.price,
+            link: item.link
+        })),
+        ...(favoriteUser || []).map(fav => ({
+            img: fav.img,
+            name: fav.name,
+            price: fav.price,
+            link: fav.link
+        }))
+    ];
+
     return (
         <div className="w-100" style={{ background: '#fafafa' }}>
 
@@ -142,27 +157,15 @@ export const Home = () => {
                         }}
                         className="mySwiper px-2"
                     >
-                        {season?.featuredItems && season.featuredItems.length > 0 ? (
-                            season.featuredItems.map((item, index) => (
+                        {combinedFavorites.length > 0 ? (
+                            combinedFavorites.map((item, index) => (
                                 <SwiperSlide key={index} className="d-flex justify-content-center h-auto my-3">
                                     <Card
-                                        imageUrl={item.imageUrl}
+                                        imageUrl={item.img}
                                         title={item.name}
                                         description={`Precio: ${item.price}`}
                                         button={button}
                                         linkButton={item.link}
-                                    />
-                                </SwiperSlide>
-                            ))
-                        ) : favoriteUser.length > 0 ? (
-                            favoriteUser.map((fav, index) => (
-                                <SwiperSlide key={index} className="d-flex justify-content-center h-auto my-3">
-                                    <Card
-                                        imageUrl={fav.img}
-                                        title={fav.name}
-                                        description={`Precio: ${fav.price}`}
-                                        button={button}
-                                        linkButton={fav.link}
                                     />
                                 </SwiperSlide>
                             ))
