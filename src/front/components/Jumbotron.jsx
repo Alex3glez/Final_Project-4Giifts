@@ -12,22 +12,25 @@ export const Jumbotron = () => {
         justifyContent: 'center',
         alignItems: 'center',
         padding: '80px 20px',
-        background: season?.heroImageUrl 
-            ? 'none' // Handled by class and backgroundImage
-            : `
-                radial-gradient(ellipse 80% 60% at 50% 0%, 
-                    color-mix(in srgb, var(--theme-primary) 55%, transparent), 
-                    transparent 65%),
-                linear-gradient(160deg, 
-                    var(--theme-gradient-start) 0%, 
-                    var(--theme-gradient-end) 50%,
-                    color-mix(in srgb, var(--theme-secondary) 15%, white) 100%)
-            `,
-        backgroundImage: season?.heroImageUrl ? `url(${season.heroImageUrl})` : undefined,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
         position: 'relative',
         overflow: 'hidden',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        ...(season?.heroImageUrl 
+            ? { backgroundImage: `url(${season.heroImageUrl})` }
+            : { 
+                background: `
+                    radial-gradient(ellipse 80% 60% at 50% 0%, 
+                        color-mix(in srgb, var(--theme-primary) 55%, transparent), 
+                        transparent 65%),
+                    linear-gradient(160deg, 
+                        var(--theme-gradient-start) 0%, 
+                        var(--theme-gradient-end) 50%,
+                        color-mix(in srgb, var(--theme-secondary) 15%, white) 100%)
+                ` 
+            }
+        )
     };
 
     return (
