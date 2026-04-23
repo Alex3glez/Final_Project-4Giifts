@@ -29,28 +29,20 @@ static_file_dir = os.path.join(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-frontend_url = os.getenv("FRONTEND_URL")
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 # -----------------------------
 # CORS CONFIG
 # -----------------------------
 CORS(app, resources={
     r"/api/*": {
-        "origins": [frontend_url],
+        "origins": [frontend_url, "http://localhost:5173", "http://localhost:3000", "http://localhost:3001"],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],
         "expose_headers": ["Authorization"],
         "supports_credentials": True
     }
 })
-
-
-@app.after_request
-def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = frontend_url
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-    return response
 
 
 # -----------------------------
@@ -70,13 +62,22 @@ mail.init_app(app)
 # -----------------------------
 db_url = os.getenv("DATABASE_URL")
 if db_url:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
-        "postgres://", "postgresql://"
-    )
+    # Fix legacy postgres:// URLs and add SSL for Supabase
+    db_url = db_url.replace("postgres://", "postgresql://")
+    # Add sslmode=require for Supabase (skip for SQLite)
+    if "supabase.com" in db_url and "sslmode" not in db_url:
+        db_url += "?sslmode=require"
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Supabase pooler settings
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 300,
+    'connect_args': {'connect_timeout': 10}
+}
 
 # -----------------------------
 # JWT CONFIG
