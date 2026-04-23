@@ -1,8 +1,9 @@
+/* Footer — Themed via CSS Custom Properties */
 .footer-wrapper {
   width: 100%;
-  background-color: #F7CAC9; 
-  padding: 20px 0;
-  border-top: 2px solid #e7a1b0;
+  background: linear-gradient(135deg, var(--theme-accent), color-mix(in srgb, var(--theme-gradient-end) 60%, #fff));
+  padding: 32px 0;
+  border-top: 1px solid rgba(0,0,0,0.06);
 }
 
 .footer-content {
@@ -29,34 +30,38 @@
 }
 
 .footer-center a {
-  color: #e48597;
-  font-weight: bold;
+  color: var(--theme-primary);
+  font-weight: 600;
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 .footer-center a:hover {
+  color: var(--theme-secondary);
   text-decoration: underline;
 }
 
 .btn-top {
-  background-color: #e7a1b0;
+  background: var(--theme-primary);
   color: white;
   border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 14px;
-  transition: 0.2s ease-in-out;
+  font-weight: 600;
+  transition: all var(--transition-smooth);
 }
 
 .btn-top:hover {
-  background-color: #e48597;
+  background: var(--theme-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--theme-primary) 30%, transparent);
 }
-
 
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 }

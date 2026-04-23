@@ -107,7 +107,7 @@ def login():
     if not user:
         return jsonify({"message": "Usuario no encontrado"}), 400
     if user.check_psw(data.get("password")):
-        token = create_access_token(identity=str(user.user_id))
+        token = create_access_token(identity=str(user.id))
         return jsonify({"user": user.to_dict(), "token": token}), 200
     return jsonify({"message": "Datos incorrectos"}), 400
 
@@ -117,7 +117,7 @@ def login():
 def msg_privado():
     user_id = int(get_jwt_identity())
     user = db.session.execute(db.select(User).where(
-        User.user_id == user_id)).scalar_one_or_none()
+        User.id == user_id)).scalar_one_or_none()
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
     return jsonify({"user": user.to_dict()}), 200
@@ -137,7 +137,7 @@ def update_user(user_id):
         if data.get(field):
             setattr(user, field, data[field])
     if data.get("password"):
-        user.password = bcrypt.generate_password_hash(
+        user.password_hash = bcrypt.generate_password_hash(
             data["password"]).decode("utf-8")
     db.session.commit()
     return jsonify({"msg": "Usuario actualizado", "user": user.to_dict()})
@@ -163,7 +163,7 @@ def get_user_contacts():
     result = []
     for c in contacts:
         result.append({
-            "id": c.contactos_id,
+            "id": c.id,
             "name": c.name,
             "relation": c.relation,
             "img": c.url_img,
@@ -204,7 +204,7 @@ def create_contact():
 
                 birthday_reminder = Reminder(
                     user_id=current_user_id,
-                    contact_id=new_contact.contactos_id,
+                    contact_id=new_contact.id,
                     title="Cumpleaños",
                     reminder_date=birth_date_str,
                     notify_days_before=7  # opcional
@@ -215,7 +215,7 @@ def create_contact():
 
         db.session.commit()
         return jsonify({
-            "id": new_contact.contactos_id,
+            "id": new_contact.id,
             "name": new_contact.name,
             "relation": new_contact.relation,
             "img": new_contact.url_img,
@@ -235,7 +235,7 @@ def create_contact():
 def update_contact(contact_id):
     current_user_id = int(get_jwt_identity())
     c = db.session.execute(db.select(Contactos).where(
-        Contactos.contactos_id == contact_id, Contactos.user_id == current_user_id)).scalar_one_or_none()
+        Contactos.id == contact_id, Contactos.user_id == current_user_id)).scalar_one_or_none()
     if not c:
         return jsonify({"msg": "No encontrado"}), 404
     data = request.get_json()
@@ -257,7 +257,7 @@ def update_contact(contact_id):
         c.url_img = data["url_img"]
     db.session.commit()
     return jsonify({
-        "id": c.contactos_id,
+        "id": c.id,
         "name": c.name,
         "relation": c.relation,
         "img": c.url_img,
@@ -274,7 +274,7 @@ def update_contact(contact_id):
 def get_single_contact(contact_id):
     current_user_id = int(get_jwt_identity())
     c = db.session.execute(db.select(Contactos).where(
-        Contactos.contactos_id == contact_id, Contactos.user_id == current_user_id)).scalar_one_or_none()
+        Contactos.id == contact_id, Contactos.user_id == current_user_id)).scalar_one_or_none()
     if not c:
         return jsonify({"msg": "No encontrado"}), 404
     return jsonify({
@@ -294,7 +294,7 @@ def get_single_contact(contact_id):
 def delete_contact(contact_id):
     current_user_id = int(get_jwt_identity())
     c = db.session.execute(db.select(Contactos).where(
-        Contactos.contactos_id == contact_id, Contactos.user_id == current_user_id)).scalar_one_or_none()
+        Contactos.id == contact_id, Contactos.user_id == current_user_id)).scalar_one_or_none()
     if not c:
         return jsonify({"msg": "No encontrado"}), 404
     db.session.delete(c)
@@ -473,7 +473,7 @@ def get_contact_favorites(contact_id):
     for f in favs:
         p = f.producto
         result.append({
-            "favorite_id": f.favorite_id,
+            "favorite_id": f.id,
             "product_id": p.id,
             "name": p.nombre,
             "img": p.img_url,
@@ -512,7 +512,7 @@ def request_recover():
         return jsonify(msg_ok), 200
 
     token = create_access_token(
-        identity=str(user.user_id),
+        identity=str(user.id),
         expires_delta=timedelta(minutes=15)
     )
 
@@ -532,7 +532,7 @@ def reset_password():
     user = db.session.get(User, user_id)
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
-    user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
+    user.password_hash = bcrypt.generate_password_hash(new_password).decode("utf-8")
     db.session.commit()
     return jsonify({"msg": "Contraseña actualizada con éxito"}), 200
 
@@ -547,7 +547,7 @@ def get_user_own_favorites():
     for f in favs:
         p = f.producto
         result.append({
-            "favorite_id": f.favorite_id,
+            "favorite_id": f.id,
             "product_id": p.id,
             "name": p.nombre,
             "img": p.img_url,
@@ -565,7 +565,7 @@ def handle_get_favorite_user():
     for f in favs:
         p = f.producto
         result.append({
-            "favorite_id": f.favorite_id,
+            "favorite_id": f.id,
             "product_id": p.id,
             "name": p.nombre,
             "img": p.img_url,

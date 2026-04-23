@@ -1,22 +1,16 @@
-:root {
-  --color-crimson: #dc143c;
-  --color-rose: #f75270;
-  --color-pink: #f7cac9;
-  --color-beige: #fdebd0;
-}
+/* Dashboard Module — Themed via CSS Custom Properties */
 
 body {
   overflow-x: hidden;
 }
 
 .dashboard-wrapper {
-  background-color: #fff;
+  background-color: #fafafa;
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  
+  font-family: var(--theme-font), 'Inter', -apple-system, sans-serif;
 }
 
-/* --- SIDEBAR STICKY CENTRADO --- */
+/* --- SIDEBAR STICKY CENTERED --- */
 .sidebar-wrapper {
   position: -webkit-sticky;
   position: sticky;
@@ -30,13 +24,13 @@ body {
 }
 
 .sidebar-custom {
-  background-color: var(--color-crimson);
+  background: linear-gradient(160deg, var(--theme-primary), var(--theme-secondary));
   color: white;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: 2.5rem 2rem;
   width: 90%;
   margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+  box-shadow: 0 10px 40px color-mix(in srgb, var(--theme-primary) 25%, transparent);
   max-height: 90vh; 
   overflow-y: auto; 
 }
@@ -45,11 +39,12 @@ body {
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   display: block;
   margin-bottom: 1.2rem;
-  transition: all 0.3s;
+  transition: all var(--transition-fast);
   cursor: pointer;
+  padding: 6px 0;
 }
 
 .sidebar-link:hover {
@@ -58,27 +53,34 @@ body {
 }
 
 .custom-select {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--color-pink);
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255,255,255,0.25);
   color: white;
   padding: 0.5rem;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   width: 100%;
   margin-top: 5px;
+  transition: all var(--transition-fast);
 }
+
+.custom-select:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255,255,255,0.5);
+}
+
 .custom-select option {
   color: #333;
 }
 
-/* --- TÍTULOS --- */
+/* --- TITLES --- */
 .section-title {
-  color: #333;
+  color: #1a1a2e;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* --- BUSCADOR --- */
+/* --- SEARCH --- */
 .search-input-container {
   max-width: 300px;
 }
@@ -86,82 +88,84 @@ body {
 .search-input {
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid var(--color-pink);
+  border-bottom: 2px solid var(--theme-accent);
   border-radius: 0;
   padding: 0.5rem 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #555;
-  transition: border-color 0.3s;
-  
+  transition: border-color var(--transition-fast);
 }
 
 .search-input:focus {
   outline: none;
   box-shadow: none;
-  border-bottom-color: var(--color-crimson);
+  border-bottom-color: var(--theme-primary);
   background-color: transparent;
 }
+
 .search-input::placeholder {
   color: #aaa;
   font-style: italic;
 }
 
-/* --- BOTONES --- */
+/* --- BUTTONS --- */
 .btn-add-contact {
-  background-color: var(--color-rose);
+  background: var(--theme-secondary);
   color: white;
   width: 45px;
   height: 45px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   border: none;
   font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s;
+  transition: all var(--transition-spring);
 }
+
 .btn-add-contact:hover {
-  transform: scale(1.1);
-  background-color: var(--color-crimson);
+  transform: scale(1.1) rotate(90deg);
+  background: var(--theme-primary);
   color: white;
 }
 
 .btn-ideas {
-  background-color: var(--color-rose) !important;
+  background: var(--theme-secondary) !important;
   color: white !important;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   font-size: 0.85rem;
   padding: 8px 20px;
   margin-top: 15px;
   font-weight: 600;
-  transition: background 0.3s, transform 0.2s;
+  transition: all var(--transition-smooth);
   text-decoration: none;
   display: inline-block;
 }
+
 .btn-ideas:hover {
-  background-color: var(--color-crimson) !important;
-  box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+  background: var(--theme-primary) !important;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--theme-primary) 30%, transparent);
   transform: translateY(-2px);
 }
 
 .btn-buy {
-  background-color: var(--color-rose) !important;
+  background: linear-gradient(135deg, var(--theme-secondary), var(--theme-primary)) !important;
   color: white !important;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
   width: 100%;
   border: none;
-  padding: 8px;
-  transition: background 0.3s, transform 0.2s;
+  padding: 10px;
+  transition: all var(--transition-smooth);
   display: block;
   text-align: center;
   text-decoration: none;
 }
+
 .btn-buy:hover {
-  background-color: var(--color-crimson) !important;
-  box-shadow: 0 4px 8px rgba(220, 20, 60, 0.2);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--theme-primary) 30%, transparent);
   transform: translateY(-2px);
   color: white;
 }
@@ -170,39 +174,42 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: var(--color-rose);
+  background: var(--theme-secondary);
   color: white;
   border: none;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  font-size: 0.8rem;
+  width: 28px;
+  height: 28px;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: background 0.3s;
-}
-.btn-delete-contact:hover {
-  background-color: var(--color-crimson);
+  transition: all var(--transition-fast);
 }
 
-/* --- TARJETAS --- */
+.btn-delete-contact:hover {
+  background: var(--theme-primary);
+  transform: scale(1.1);
+}
+
+/* --- CARDS --- */
 .contact-card {
-  background-color: white;
-  border: 2px solid var(--color-beige);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: var(--radius-lg);
   position: relative;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all var(--transition-smooth);
   overflow: hidden;
   cursor: pointer;
 }
 
 .contact-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  border-color: var(--color-pink);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--theme-accent);
 }
 
 .contact-img {
@@ -210,18 +217,21 @@ body {
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid var(--color-beige);
+  border: 3px solid var(--theme-accent);
+  transition: all var(--transition-spring);
 }
 
-/* --- RECORDATORIOS --- */
+.contact-card:hover .contact-img {
+  border-color: var(--theme-primary);
+  transform: scale(1.05);
+}
 
+/* --- REMINDERS --- */
 .reminder-viewport {
   width: 100%;
   overflow: hidden;
   position: relative;
-
   padding-block: 12px;
-
   cursor: grab;
   touch-action: pan-y;
 }
@@ -233,7 +243,6 @@ body {
 .reminder-track {
   display: flex;
   flex-wrap: nowrap;
-
   transition: transform 0.45s ease;
   will-change: transform;
 }
@@ -247,35 +256,36 @@ body {
 
 .reminder-card-inner {
   width: 100%;
-
   margin-inline: 10px;
-
   padding: 1.5rem;
-
-  background-color: var(--color-pink);
-  border-radius: 20px;
-  color: #5d2a2a;
+  background: var(--theme-accent);
+  border-radius: var(--radius-lg);
+  color: #3d2a2a;
   text-align: center;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   user-select: none;
   -webkit-user-select: none;
+  transition: all var(--transition-smooth);
+}
+
+.reminder-card-inner:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .reminder-card-inner > *:not(:last-child) {
   margin-bottom: 0.6rem;
 }
 
+/* --- SAVED GIFTS --- */
 .saved-gifts-section {
-  background-color: var(--color-crimson);
-  border-radius: 25px;
-  padding: 15px;
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+  border-radius: var(--radius-lg);
+  padding: 16px;
   margin-top: 3rem;
   margin-bottom: 2rem;
   position: relative;
@@ -296,7 +306,7 @@ body {
 
 .saved-gifts-inner {
   background-color: white;
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   padding: 2rem;
 }
 
@@ -305,31 +315,34 @@ body {
   top: 15px;
   right: 15px;
   background-color: white;
-  color: var(--color-crimson);
+  color: var(--theme-primary);
   border: none;
   font-weight: bold;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   z-index: 20;
-  transition: transform 0.2s;
+  transition: all var(--transition-spring);
 }
+
 .btn-close-gifts:hover {
-  transform: scale(1.1);
+  transform: scale(1.15) rotate(90deg);
 }
 
 .gift-item-card {
   background-color: white;
-  border: 1px solid #eee;
-  border-radius: 15px;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   height: 100%;
-  transition: transform 0.2s;
+  transition: all var(--transition-smooth);
   position: relative;
 }
+
 .gift-item-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
 .gift-img {
@@ -340,24 +353,25 @@ body {
 
 .btn-delete-gift {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 8px;
+  right: 8px;
   background-color: rgba(255, 255, 255, 0.9);
-  color: var(--color-crimson);
-  border: 1px solid var(--color-pink);
+  color: var(--theme-primary);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 5;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
+
 .btn-delete-gift:hover {
-  background-color: var(--color-crimson);
+  background-color: var(--theme-primary);
   color: white;
   transform: scale(1.1);
 }
@@ -384,59 +398,61 @@ body {
 
   .sidebar-custom {
     width: 100%;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   }
 }
 
 .btn-edit-contact {
   position: absolute;
   top: 10px;
-  right: 40px;
+  right: 42px;
   background-color: #6c757d;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  font-size: 0.8rem;
+  width: 28px;
+  height: 28px;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: background 0.3s, transform 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .btn-edit-contact:hover {
   background-color: #495057;
+  transform: scale(1.1);
 }
-/* --- DAY-LEFTS --- */
+
+/* --- DAYS-LEFT --- */
 .days-lefts {
-    padding: 10px 15px;
-    border-radius: 12px;
-    text-align: center;
-    transition: all 0.4s ease;
-    display: inline-block;
-    width: 100%;
+  padding: 10px 15px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  transition: all 0.4s ease;
+  display: inline-block;
+  width: 100%;
 }
+
 .emergencyLight {
-    animation: emergencyBlink 1s infinite alternate;
-    font-weight: 800;
-    border: 2px solid transparent;
+  animation: emergencyBlink 1s infinite alternate;
+  font-weight: 800;
+  border: 2px solid transparent;
 }
+
 @keyframes emergencyBlink {
-    0% {
-        /* Estado: Apagado */
-        background-color: #f8d7da; /* Rojo muy tenue */
-        color: #721c24;
-        box-shadow: 0 0 0px transparent;
-        transform: scale(1);
-    }
-    100% {
-        /* Estado: Encendido (Luz brillante) */
-        background-color: #f75270; /* Tu color principal */
-        color: #ffffff;
-        box-shadow: 0 0 15px #f75270, 0 0 30px #ff8a9e;
-        transform: scale(1.02); /* Pequeño pulso */
-    }
+  0% {
+    background-color: #f8d7da;
+    color: #721c24;
+    box-shadow: 0 0 0px transparent;
+    transform: scale(1);
+  }
+  100% {
+    background-color: var(--theme-secondary);
+    color: #ffffff;
+    box-shadow: 0 0 15px var(--theme-secondary), 0 0 30px var(--theme-accent);
+    transform: scale(1.02);
+  }
 }

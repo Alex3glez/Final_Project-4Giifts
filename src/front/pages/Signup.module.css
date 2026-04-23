@@ -1,79 +1,86 @@
-/* Fondo general SOLO para esta vista */
+/* Signup Module — Themed via CSS Custom Properties */
+
 .signupWrapper {
-  background: linear-gradient(135deg, #FDEBD0, #F7CAC9);
+  background: linear-gradient(135deg, var(--theme-gradient-start), var(--theme-gradient-end));
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 0;
+  padding: 40px 20px;
+  animation: fadeIn 0.5s ease-out;
 }
 
-/* Contenedor del formulario */
 .card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 25px;
-  border: none;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
-  width: 420px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  width: 440px;
+  max-width: 100%;
 }
 
-/* Títulos */
 .title {
-  color: #b14466;
-  font-weight: 700;
+  color: var(--theme-primary);
+  font-weight: 800;
+  font-size: 1.6rem;
 }
 
 .subtitle {
-  color: #555;
+  color: #666;
+  font-size: 0.95rem;
 }
 
-/* Inputs */
 .input {
-  border-radius: 10px;
-  border: 1px solid #e5b4c3;
+  border-radius: var(--radius-sm);
+  border: 1px solid #e5e5e5;
   background-color: #fff;
-  transition: 0.3s;
+  transition: all var(--transition-fast);
+  padding: 10px 14px;
 }
 
 .input:focus {
-  border-color: #b14466;
-  box-shadow: 0 0 6px rgba(177, 68, 102, 0.4);
+  border-color: var(--theme-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primary) 15%, transparent);
 }
 
-/* Labels */
 .label {
   font-weight: 600;
-  color: #b14466;
+  color: var(--theme-primary);
+  font-size: 0.9rem;
 }
 
-/* Botón */
 .submitBtn {
   width: 100%;
-  padding: 12px;
-  background-color: #b14466;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
   color: white;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: none;
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all var(--transition-smooth);
   margin-top: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
 .submitBtn:hover {
-  background-color: #8f2f4c;
-  transform: scale(1.02);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--theme-primary) 35%, transparent);
 }
 
-/* Enlaces */
 .link {
-  color: #b14466;
+  color: var(--theme-primary);
   font-weight: 600;
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 .link:hover {
+  color: var(--theme-secondary);
   text-decoration: underline;
 }
