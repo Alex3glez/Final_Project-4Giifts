@@ -57,7 +57,7 @@ export const Navbar = () => {
             <div className="container">
                 <Link to="/" className="d-flex align-items-center gap-2" style={{ textDecoration: 'none' }}>
                     <img
-                        src="/Logo_solo_4giifts-removebg-preview (1).png"
+                        src={season?.logoOverrideUrl || "/Logo_solo_4giifts-removebg-preview (1).png"}
                         height="40"
                         alt="4Giifts Logo"
                         style={{ transition: 'transform var(--transition-spring)' }}
