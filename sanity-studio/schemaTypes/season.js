@@ -136,5 +136,22 @@ export default {
       title: 'Top Banner Message',
       type: 'string',
     },
+    {
+      name: 'featuredItems',
+      title: 'Los más elegidos por la comunidad',
+      type: 'array',
+      of: [
+        {
+          name: 'featuredItem',
+          type: 'object',
+          fields: [
+            { name: 'name', title: 'Product Name', type: 'string' },
+            { name: 'price', title: 'Approximate Price', type: 'string' },
+            { name: 'image', title: 'Product Image', type: 'image' },
+            { name: 'link', title: 'Purchase Link', type: 'url' },
+          ],
+        },
+      ],
+    },
   ],
 }

@@ -95,7 +95,13 @@ export function SeasonalThemeProvider({ children }) {
       heroTitle, heroSubtitle, heroCTA,
       "heroImageUrl": heroImage.asset->url,
       "logoOverrideUrl": logoOverride.asset->url,
-      navbarStyle, particleEffect, bannerMessage, featuredEmoji
+      navbarStyle, particleEffect, bannerMessage, featuredEmoji,
+      featuredItems[]{
+        name,
+        price,
+        "imageUrl": image.asset->url,
+        link
+      }
     }`;
 
     sanityClient

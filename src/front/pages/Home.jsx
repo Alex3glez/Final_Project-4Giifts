@@ -142,7 +142,19 @@ export const Home = () => {
                         }}
                         className="mySwiper px-2"
                     >
-                        {favoriteUser.length > 0 ? (
+                        {season?.featuredItems && season.featuredItems.length > 0 ? (
+                            season.featuredItems.map((item, index) => (
+                                <SwiperSlide key={index} className="d-flex justify-content-center h-auto my-3">
+                                    <Card
+                                        imageUrl={item.imageUrl}
+                                        title={item.name}
+                                        description={`Precio: ${item.price}`}
+                                        button={button}
+                                        linkButton={item.link}
+                                    />
+                                </SwiperSlide>
+                            ))
+                        ) : favoriteUser.length > 0 ? (
                             favoriteUser.map((fav, index) => (
                                 <SwiperSlide key={index} className="d-flex justify-content-center h-auto my-3">
                                     <Card
