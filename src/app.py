@@ -5,7 +5,7 @@ from flask import Flask, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, bcrypt
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
@@ -92,6 +92,7 @@ jwt = JWTManager(app)
 # -----------------------------
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
+bcrypt.init_app(app)
 
 setup_admin(app)
 setup_commands(app)

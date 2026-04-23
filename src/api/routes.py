@@ -84,20 +84,27 @@ def handle_hello():
 @api.route('/signup', methods=['POST'])
 def create_user():
     data = request.get_json()
-    user = User.create_new_user(
-        # aqui se harian validaciones
-        email=data.get("email"),
-        password=data.get("password"),
-        first_name=data.get("first_name"),
-        last_name=data.get("last_name"),
-        birth_date=data.get("birth_date"),
-        hobbies=data.get("hobbies"),
-        ocupacion=data.get("ocupacion"),
-        tipo_personalidad=data.get("tipo_personalidad"),
-        gender=data.get("gender"),
-        profile_pic=data.get("profile_pic")
-    )
-    return jsonify(user.to_dict()), 201
+    if not data:
+        return jsonify({"message": "Petición inválida"}), 400
+        
+    try:
+        user = User.create_new_user(
+            # aqui se harian validaciones
+            email=data.get("email"),
+            password=data.get("password"),
+            first_name=data.get("first_name"),
+            last_name=data.get("last_name"),
+            birth_date=data.get("birth_date"),
+            hobbies=data.get("hobbies"),
+            ocupacion=data.get("ocupacion"),
+            tipo_personalidad=data.get("tipo_personalidad"),
+            gender=data.get("gender"),
+            profile_pic=data.get("profile_pic")
+        )
+        return jsonify(user.to_dict()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error al crear el usuario. Es posible que el correo ya esté en uso o falten datos obligatorios.", "error": str(e)}), 400
 
 
 @api.route('/login', methods=['POST'])
