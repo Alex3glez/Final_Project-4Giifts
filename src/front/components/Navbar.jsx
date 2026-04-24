@@ -13,17 +13,28 @@ export const Navbar = () => {
     useEffect(() => {
         const checkAuth = async () => {
             const token = sessionStorage.getItem("token");
-            if (!token) {
+            if (!token || token === "undefined" || token === "null") {
                 setIsLogged(false);
                 setUser(null);
                 return;
             }
 
-            setIsLogged(true);
-            const resp = await getPrivateData();
-            if (resp.ok) {
-                const data = await resp.json();
-                setUser(data.user);
+            try {
+                const resp = await getPrivateData();
+                if (resp.ok) {
+                    const data = await resp.json();
+                    setIsLogged(true);
+                    setUser(data.user);
+                } else {
+                    // Token is invalid or expired
+                    sessionStorage.removeItem("token");
+                    setIsLogged(false);
+                    setUser(null);
+                }
+            } catch (error) {
+                console.error("Auth check failed:", error);
+                setIsLogged(false);
+                setUser(null);
             }
         };
 
