@@ -23,7 +23,10 @@ export default defineConfig({
 
     // 👁️ Visual Editing — edita la web haciendo clic en cualquier campo
     presentationTool({
-      previewUrl: 'http://localhost:3000',
+      previewUrl: {
+        origin: 'http://localhost:3000',
+        preview: '/',
+      },
       name: 'presentation',
       title: '👁️ Vista Previa Web',
     }),
