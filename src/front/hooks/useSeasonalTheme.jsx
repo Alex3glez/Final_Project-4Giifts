@@ -19,10 +19,11 @@ const sanityClient = createClient({
   apiVersion: "2024-01-01",
   stega: {
     // Solo activar dentro del iframe del Studio (Presentation Tool)
-    // En navegación normal: stega desactivado → colores CSS correctos
-    // En iframe del Studio: stega activado → overlays de edición funcionan
     enabled: isPresentation,
-    studioUrl: "http://localhost:3333",
+    // URL del studio para los enlaces de "clic para editar"
+    studioUrl: typeof window !== "undefined" && window.location.hostname === "localhost"
+      ? "http://localhost:3333"
+      : "https://fourgiifts.sanity.studio",
   },
 });
 
@@ -74,23 +75,49 @@ function saveToCache(data) {
   }
 }
 
+/**
+ * Limpia los caracteres de Stega (Visual Editing) de un string.
+ * Sanity añade metadatos invisibles que corrompen las variables CSS.
+ */
+function cleanStega(value) {
+  if (typeof value !== "string") return value;
+  
+  // Si parece un color hexadecimal, extraemos solo la parte del color
+  // Sanity inyecta metadatos después (o a veces antes) del string visible
+  const hexMatch = value.match(/#[0-9A-Fa-f]{3,8}/);
+  if (hexMatch) return hexMatch[0];
+  
+  // Para otros strings (como fuentes), eliminamos caracteres de control/invisibles de Sanity.
+  // Usamos un rango de caracteres más amplio para asegurar limpieza total.
+  return value.replace(/[\u200B-\u200D\uFEFF\u2060\u2061\u2062\u2063\u2064\u206A-\u206F]/g, "").trim();
+}
+
 function applyThemeToDOM(theme) {
   const root = document.documentElement;
-  root.style.setProperty("--theme-primary", theme.colorPrimary);
-  root.style.setProperty("--theme-secondary", theme.colorSecondary);
-  root.style.setProperty("--theme-accent", theme.colorAccent);
-  root.style.setProperty("--theme-gradient-start", theme.gradientStart);
-  root.style.setProperty("--theme-gradient-end", theme.gradientEnd);
-  root.style.setProperty("--theme-font", theme.fontFamily);
+  
+  // Aplicamos limpieza a todos los valores que van a CSS
+  const primary = cleanStega(theme.colorPrimary);
+  const secondary = cleanStega(theme.colorSecondary);
+  const accent = cleanStega(theme.colorAccent);
+  const gStart = cleanStega(theme.gradientStart);
+  const gEnd = cleanStega(theme.gradientEnd);
+  const font = cleanStega(theme.fontFamily);
+
+  root.style.setProperty("--theme-primary", primary);
+  root.style.setProperty("--theme-secondary", secondary);
+  root.style.setProperty("--theme-accent", accent);
+  root.style.setProperty("--theme-gradient-start", gStart);
+  root.style.setProperty("--theme-gradient-end", gEnd);
+  root.style.setProperty("--theme-font", font);
 
   // Load Google Font dynamically
-  if (theme.fontFamily && theme.fontFamily !== "Inter") {
-    const fontId = `gfont-${theme.fontFamily.replace(/\s+/g, "-")}`;
+  if (font && font !== "Inter") {
+    const fontId = `gfont-${font.replace(/\s+/g, "-")}`;
     if (!document.getElementById(fontId)) {
       const link = document.createElement("link");
       link.id = fontId;
       link.rel = "stylesheet";
-      link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(theme.fontFamily)}:wght@300;400;600;700&display=swap`;
+      link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(font)}:wght@300;400;600;700&display=swap`;
       document.head.appendChild(link);
     }
   }
@@ -117,8 +144,13 @@ export function SeasonalThemeProvider({ children }) {
       }
     }`;
 
+    // En el modo presentación (Studio), usamos la perspectiva de borradores para ver cambios en vivo
+    const options = {
+      perspective: isPresentation ? 'previewDrafts' : 'published'
+    };
+
     sanityClient
-      .fetch(query, { today })
+      .fetch(query, { today }, options)
       .then((data) => {
         const theme = data || defaultTheme;
         const merged = { ...defaultTheme, ...theme };

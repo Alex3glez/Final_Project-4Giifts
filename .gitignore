@@ -64,6 +64,7 @@ node_modules/
 
 # webpack output
 dist/*
+sanity-studio/dist/
 !public/
 !public/*
 

@@ -16,7 +16,7 @@ export default defineConfig({
 
   plugins: [
     structureTool(),
-    visionTool(),
+    visionTool({defaultApiVersion: '2024-01-01'}),
 
     // ✨ AI Assist — genera contenido automáticamente en cada campo
     assist(),
@@ -24,7 +24,9 @@ export default defineConfig({
     // 👁️ Visual Editing — edita la web haciendo clic en cualquier campo
     presentationTool({
       previewUrl: {
-        origin: 'http://localhost:3000',
+        origin: typeof window !== 'undefined' && window.location.hostname === 'localhost'
+          ? 'http://localhost:3000'
+          : 'https://sample-service-name-h3u9.onrender.com',
         preview: '/',
       },
       name: 'presentation',
@@ -39,8 +41,6 @@ export default defineConfig({
           component: ThemeDashboardWidget,
           layout: {width: 'large'},
         },
-        projectInfoWidget(),
-        projectUsersWidget(),
       ],
     }),
   ],

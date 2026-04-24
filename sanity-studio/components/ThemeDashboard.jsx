@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react'
-import { createClient } from '@sanity/client'
+import { useClient } from 'sanity'
 import { Card, Stack, Text, Heading, Badge, Box, Flex, Button, Spinner } from '@sanity/ui'
-
-const client = createClient({
-  projectId: 'c3139aap',
-  dataset: 'production',
-  useCdn: false,
-  apiVersion: '2024-01-01',
-})
 
 function colorDot(color) {
   return (
@@ -27,6 +20,7 @@ function colorDot(color) {
 }
 
 export function ThemeDashboardWidget() {
+  const client = useClient({ apiVersion: '2024-01-01' })
   const [themes, setThemes] = useState([])
   const [active, setActive] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -56,7 +50,7 @@ export function ThemeDashboardWidget() {
         }
       })
       .finally(() => setLoading(false))
-  }, [])
+  }, [client, today])
 
   const upcoming = themes
     .filter((t) => !t.isActive && t.startDate > today)

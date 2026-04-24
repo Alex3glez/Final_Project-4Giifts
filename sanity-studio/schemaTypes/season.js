@@ -20,24 +20,14 @@ export default {
     {
       name: 'startDate',
       title: 'Start Date',
-      type: 'string',
-      description: 'Fecha de inicio en formato YYYY-MM-DD (ej. 2026-06-14). La IA la rellenará automáticamente.',
-      validation: (Rule) =>
-        Rule.custom((val) => {
-          if (!val) return true
-          return /^\d{4}-\d{2}-\d{2}$/.test(val) || 'El formato debe ser YYYY-MM-DD'
-        }),
+      type: 'date',
+      description: 'Fecha de inicio de la temporada. La IA la generará automáticamente basándose en la festividad.',
     },
     {
       name: 'endDate',
       title: 'End Date',
-      type: 'string',
-      description: 'Fecha de fin en formato YYYY-MM-DD (ej. 2026-06-22). La IA la rellenará automáticamente.',
-      validation: (Rule) =>
-        Rule.custom((val) => {
-          if (!val) return true
-          return /^\d{4}-\d{2}-\d{2}$/.test(val) || 'El formato debe ser YYYY-MM-DD'
-        }),
+      type: 'date',
+      description: 'Fecha de fin de la temporada. La IA la generará automáticamente.',
     },
     {
       name: 'priority',
@@ -50,7 +40,7 @@ export default {
       name: 'colorPrimary',
       title: 'Primary Color',
       type: 'string',
-      description: 'CSS color code (e.g. #DC143C)',
+      description: 'Código HEX del color principal (ej. #FF0000). Debe combinar con la festividad.',
       validation: (Rule) => Rule.required(),
     },
     {
