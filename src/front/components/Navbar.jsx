@@ -2,12 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getPrivateData } from "../services";
 import useSeasonalTheme from "../hooks/useSeasonalTheme";
-import { createDataAttribute } from "@sanity/visual-editing";
-
-const sanityAttribute = createDataAttribute({
-    projectId: "c3139aap",
-    dataset: "production",
-});
 
 export const Navbar = () => {
     const [isLogged, setIsLogged] = useState(false);
@@ -80,7 +74,6 @@ export const Navbar = () => {
                         style={{ transition: 'transform var(--transition-spring)' }}
                         onMouseOver={e => e.target.style.transform = 'scale(1.1) rotate(-5deg)'}
                         onMouseOut={e => e.target.style.transform = 'scale(1)'}
-                        data-sanity={season?._id ? sanityAttribute({ id: season._id, type: "season", path: "logoOverride" }).toString() : undefined}
                     />
                     {season?.emoji && (
                         <span style={{ fontSize: '1.3rem', animation: 'float 3s ease-in-out infinite' }}>

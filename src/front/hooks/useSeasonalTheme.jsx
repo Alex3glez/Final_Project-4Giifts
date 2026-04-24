@@ -130,7 +130,6 @@ export function SeasonalThemeProvider({ children }) {
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     const query = `*[_type == "season" && (isActive == true || (startDate <= $today && endDate >= $today))] | order(isActive desc, priority desc)[0]{
-      _id,
       name, colorPrimary, colorSecondary, colorAccent,
       gradientStart, gradientEnd, fontFamily,
       heroTitle, heroSubtitle, heroCTA,

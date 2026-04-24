@@ -1,11 +1,5 @@
 import { Link } from "react-router-dom";
 import useSeasonalTheme from "../hooks/useSeasonalTheme";
-import { createDataAttribute } from "@sanity/visual-editing";
-
-const sanityAttribute = createDataAttribute({
-    projectId: "c3139aap",
-    dataset: "production",
-});
 
 export const Jumbotron = () => {
     const { season, loading } = useSeasonalTheme();
@@ -60,7 +54,6 @@ export const Jumbotron = () => {
                 <div
                     className={`jumbotron m-0 p-0 text-center ${season?.heroImageUrl ? 'pers-bg-img-jumbotron' : ''}`}
                     style={heroStyle}
-                    data-sanity={season?._id ? sanityAttribute({ id: season._id, type: "season", path: "heroImage" }).toString() : undefined}
                 >
                     {/* Emoji badge */}
                     {season?.featuredEmoji && (

@@ -6,12 +6,6 @@ const PARTICLES = {
   hearts: { chars: ["❤", "💕", "💖", "♥"], count: 25, speed: 6 },
   leaves: { chars: ["🍂", "🍁", "🌿", "🍃"], count: 20, speed: 7 },
   confetti: { chars: ["🎊", "✨", "⭐", "🎉"], count: 30, speed: 5 },
-  stars: { chars: ["⭐", "🌟", "✨", "💫"], count: 30, speed: 6 },
-  money: { chars: ["💸", "💵", "🤑", "💰"], count: 20, speed: 6 },
-  ghosts: { chars: ["👻", "✨", "🦇"], count: 20, speed: 7 },
-  pumpkins: { chars: ["🎃", "🦇", "🕷️"], count: 20, speed: 6 },
-  suns: { chars: ["☀️", "🌞", "✨"], count: 20, speed: 8 },
-  flipflops: { chars: ["🩴", "🏖️", "🌊"], count: 15, speed: 6 },
 };
 
 export const ParticleEffect = () => {
