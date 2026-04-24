@@ -199,6 +199,11 @@ export default {
           { title: 'Hearts', value: 'hearts' },
           { title: 'Snow', value: 'snow' },
           { title: 'Stars', value: 'stars' },
+          { title: 'Money', value: 'money' },
+          { title: 'Halloween (Ghosts)', value: 'ghosts' },
+          { title: 'Halloween (Pumpkins)', value: 'pumpkins' },
+          { title: 'Summer (Suns)', value: 'suns' },
+          { title: 'Summer (Flip-Flops)', value: 'flipflops' },
         ],
       },
       initialValue: 'none',
@@ -224,7 +229,29 @@ export default {
           fields: [
             { name: 'name', title: 'Product Name', type: 'string' },
             { name: 'price', title: 'Approximate Price', type: 'string' },
-            { name: 'image', title: 'Product Image', type: 'image' },
+            { 
+              name: 'image', 
+              title: 'Product Image', 
+              type: 'image',
+              options: {
+                aiAssist: {
+                  imageInstructionField: 'prompt',
+                },
+              },
+              fields: [
+                {
+                  name: 'prompt',
+                  type: 'string',
+                  title: 'AI Image Prompt',
+                  description: 'Instrucciones para generar la imagen de este producto.',
+                  options: {
+                    canvasApp: {
+                      purpose: 'Crea un prompt en inglés para generar una foto del producto descrito en "Product Name". Estilo profesional de tienda (fondo neutro o levemente ambientado).',
+                    }
+                  }
+                },
+              ],
+            },
             { name: 'link', title: 'Purchase Link', type: 'url' },
           ],
         },
