@@ -134,11 +134,47 @@ export default {
       name: 'heroImage',
       title: 'Hero Background Image',
       type: 'image',
+      options: {
+        aiAssist: {
+          imageInstructionField: 'prompt',
+        },
+      },
+      fields: [
+        {
+          name: 'prompt',
+          type: 'string',
+          title: 'AI Image Prompt',
+          description: 'Instrucciones para la IA. Se recomienda mencionar el nombre de la festividad o campaña.',
+          options: {
+            canvasApp: {
+              purpose: 'Crea un prompt en inglés detallado para generar una imagen de fondo (hero image) basándose en el nombre de la campaña. Describe una escena festiva sin texto, de alta calidad.',
+            }
+          }
+        },
+      ],
     },
     {
       name: 'logoOverride',
       title: 'Custom Logo',
       type: 'image',
+      options: {
+        aiAssist: {
+          imageInstructionField: 'prompt',
+        },
+      },
+      fields: [
+        {
+          name: 'prompt',
+          type: 'string',
+          title: 'AI Image Prompt',
+          description: 'Instrucciones para la IA para generar el logo.',
+          options: {
+            canvasApp: {
+              purpose: 'Crea un prompt en inglés detallado para generar una variación del logo de 4Giifts adaptado a la festividad. El diseño debe ser minimalista, similar a un logo de app moderno, con el texto "4Giifts".',
+            }
+          }
+        },
+      ],
     },
     {
       name: 'navbarStyle',
