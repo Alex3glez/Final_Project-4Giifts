@@ -8,6 +8,7 @@ import { router } from "./routes";
 import { StoreProvider } from "./hooks/useGlobalReducer";
 import { SeasonalThemeProvider } from "./hooks/useSeasonalTheme";
 import { BackendURL } from "./components/BackendURL";
+import { VisualEditing } from "@sanity/visual-editing";
 
 const Main = () => {
     if (!import.meta.env.VITE_BACKEND_URL) {
@@ -18,6 +19,8 @@ const Main = () => {
         <StoreProvider>
             <SeasonalThemeProvider>
                 <RouterProvider router={router} />
+                {/* VisualEditing self-activates only inside the Sanity Presentation Tool iframe */}
+                <VisualEditing />
             </SeasonalThemeProvider>
         </StoreProvider>
     );
@@ -28,3 +31,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Main />
     </React.StrictMode>
 );
+

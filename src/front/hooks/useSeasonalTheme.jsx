@@ -1,16 +1,26 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { createClient } from "@sanity/client";
+import { createClient } from "@sanity/client/stega";
 
 const SANITY_PROJECT_ID = "c3139aap";
 const SANITY_DATASET = "production";
 const CACHE_KEY = "4giifts_season_cache";
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
+// Stega-encoded client for Visual Editing support (lightweight, auto-disables when not in Presentation)
+const isPresentation = typeof window !== "undefined" &&
+  (window.parent !== window || new URLSearchParams(window.location.search).has("sanity-preview"));
+
 const sanityClient = createClient({
   projectId: SANITY_PROJECT_ID,
   dataset: SANITY_DATASET,
   useCdn: false,
   apiVersion: "2024-01-01",
+  stega: {
+    // Always enable stega — it's harmless in normal browsing, only activates when the
+    // Presentation Tool iframe is detected (it listens for the channel message)
+    enabled: true,
+    studioUrl: "http://localhost:3333",
+  },
 });
 
 const defaultTheme = {
