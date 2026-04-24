@@ -20,14 +20,24 @@ export default {
     {
       name: 'startDate',
       title: 'Start Date',
-      type: 'date',
-      description: 'When this theme should automatically activate',
+      type: 'string',
+      description: 'Fecha de inicio en formato YYYY-MM-DD (ej. 2026-06-14). La IA la rellenará automáticamente.',
+      validation: (Rule) =>
+        Rule.custom((val) => {
+          if (!val) return true
+          return /^\d{4}-\d{2}-\d{2}$/.test(val) || 'El formato debe ser YYYY-MM-DD'
+        }),
     },
     {
       name: 'endDate',
       title: 'End Date',
-      type: 'date',
-      description: 'When this theme should automatically deactivate',
+      type: 'string',
+      description: 'Fecha de fin en formato YYYY-MM-DD (ej. 2026-06-22). La IA la rellenará automáticamente.',
+      validation: (Rule) =>
+        Rule.custom((val) => {
+          if (!val) return true
+          return /^\d{4}-\d{2}-\d{2}$/.test(val) || 'El formato debe ser YYYY-MM-DD'
+        }),
     },
     {
       name: 'priority',

@@ -6,9 +6,11 @@ const SANITY_DATASET = "production";
 const CACHE_KEY = "4giifts_season_cache";
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
-// Stega-encoded client for Visual Editing support (lightweight, auto-disables when not in Presentation)
+// Solo activar stega dentro del iframe del Sanity Presentation Tool.
+// Cuando stega está siempre activo, añade caracteres Unicode invisibles a los strings
+// (incluidos los colores hex como #DC143C), corrompiendo las variables CSS y perdiendo los estilos.
 const isPresentation = typeof window !== "undefined" &&
-  (window.parent !== window || new URLSearchParams(window.location.search).has("sanity-preview"));
+  window.parent !== window;
 
 const sanityClient = createClient({
   projectId: SANITY_PROJECT_ID,
@@ -16,9 +18,10 @@ const sanityClient = createClient({
   useCdn: false,
   apiVersion: "2024-01-01",
   stega: {
-    // Always enable stega — it's harmless in normal browsing, only activates when the
-    // Presentation Tool iframe is detected (it listens for the channel message)
-    enabled: true,
+    // Solo activar dentro del iframe del Studio (Presentation Tool)
+    // En navegación normal: stega desactivado → colores CSS correctos
+    // En iframe del Studio: stega activado → overlays de edición funcionan
+    enabled: isPresentation,
     studioUrl: "http://localhost:3333",
   },
 });
