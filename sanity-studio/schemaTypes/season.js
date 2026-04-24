@@ -2,6 +2,11 @@ export default {
   name: 'season',
   title: 'Season Theme',
   type: 'document',
+  options: {
+    canvasApp: {
+      purpose: 'Un tema estacional o campaña (ej. Navidad, San Valentín) que cambia dinámicamente los colores, tipografías y contenido destacado de la tienda.',
+    },
+  },
   fields: [
     {
       name: 'name',
@@ -9,6 +14,11 @@ export default {
       type: 'string',
       description: 'Internal name for the theme (e.g. San Valentin 2026)',
       validation: (Rule) => Rule.required(),
+      options: {
+        canvasApp: {
+          purpose: 'El título o nombre exacto de la campaña (ej. "Black Friday Sale"). Es obligatorio y debe mapearse siempre a partir del contenido.',
+        }
+      }
     },
     {
       name: 'isActive',
@@ -16,18 +26,31 @@ export default {
       type: 'boolean',
       description: 'Set to true to force this theme to be active immediately',
       initialValue: false,
+      options: {
+        canvasApp: { exclude: true }
+      }
     },
     {
       name: 'startDate',
       title: 'Start Date',
       type: 'date',
       description: 'Fecha de inicio de la temporada. La IA la generará automáticamente basándose en la festividad.',
+      options: {
+        canvasApp: {
+          purpose: 'La fecha de inicio del evento en formato YYYY-MM-DD. Debe inferirse de la campaña.',
+        }
+      }
     },
     {
       name: 'endDate',
       title: 'End Date',
       type: 'date',
       description: 'Fecha de fin de la temporada. La IA la generará automáticamente.',
+      options: {
+        canvasApp: {
+          purpose: 'La fecha de fin del evento en formato YYYY-MM-DD. Debe inferirse de la campaña.',
+        }
+      }
     },
     {
       name: 'priority',
@@ -35,6 +58,9 @@ export default {
       type: 'number',
       description: 'Higher number means this theme will override others if dates overlap',
       initialValue: 0,
+      options: {
+        canvasApp: { exclude: true }
+      }
     },
     {
       name: 'colorPrimary',
@@ -42,6 +68,11 @@ export default {
       type: 'string',
       description: 'Código HEX del color principal (ej. #FF0000). Debe combinar con la festividad.',
       validation: (Rule) => Rule.required(),
+      options: {
+        canvasApp: {
+          purpose: 'Color hexadecimal principal representativo (ej. #FF0000 para Navidad). Obligatorio.',
+        }
+      }
     },
     {
       name: 'colorSecondary',
@@ -49,6 +80,11 @@ export default {
       type: 'string',
       description: 'CSS color code (e.g. #F75270)',
       validation: (Rule) => Rule.required(),
+      options: {
+        canvasApp: {
+          purpose: 'Color hexadecimal secundario que contraste o complemente al principal. Obligatorio.',
+        }
+      }
     },
     {
       name: 'colorAccent',
@@ -56,6 +92,11 @@ export default {
       type: 'string',
       description: 'CSS color code (e.g. #F7CAC9)',
       validation: (Rule) => Rule.required(),
+      options: {
+        canvasApp: {
+          purpose: 'Color hexadecimal de acento para detalles. Obligatorio.',
+        }
+      }
     },
     {
       name: 'gradientStart',
